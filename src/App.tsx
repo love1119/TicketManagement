@@ -90,9 +90,30 @@ const App: FC = () => {
     }
   }
 
+  const deleteTicket = (id: number): Promise<boolean> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const ticketIndex = (state.tickets || []).findIndex(
+          (ticket: TicketType) => ticket.id === id
+        )
+
+        if (ticketIndex >= 0) {
+          state.tickets = [
+            ...state.tickets.slice(0, ticketIndex),
+            ...state.tickets.slice(ticketIndex + 1)
+          ]
+          updateState({ ...state })
+          resolve(true)
+        } else {
+          resolve(false)
+        }
+      }, 2000)
+    })
+  }
+
   return (
     <DataContext.Provider
-      value={{ state, logIn, createTicket, updateTicketStatus }}
+      value={{ state, logIn, createTicket, updateTicketStatus, deleteTicket }}
     >
       <div className="bg-white">
         <Switch>

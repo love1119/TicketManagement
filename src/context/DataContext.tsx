@@ -8,11 +8,13 @@ export type DataContextType = {
   logout?: () => void
   createTicket: (title: string, description?: string) => Promise<boolean>
   updateTicketStatus: (id: number, status: TicketStatus) => void
+  deleteTicket: (id: number) => Promise<boolean>
 }
 
 export const DataContext = React.createContext<DataContextType>({
   state: {} as RootState,
   logIn: () => Promise.resolve(false),
   createTicket: () => Promise.resolve(false),
-  updateTicketStatus: () => ({})
+  updateTicketStatus: () => ({}),
+  deleteTicket: () => Promise.resolve(false)
 })

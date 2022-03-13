@@ -13,12 +13,26 @@ type TicketProps = {
 }
 
 const Ticket = ({ task }: TicketProps) => {
+  const [loading, setLoading] = useState<boolean>(false)
   const [statusList, setStatusList] = useState<string[]>([])
 
-  const { updateTicketStatus } = useContext<DataContextType>(DataContext)
+  const { updateTicketStatus, deleteTicket } =
+    useContext<DataContextType>(DataContext)
 
   const onTicketStatusChange = (value: TicketStatus) => {
     updateTicketStatus(task.id, value)
+  }
+
+  const onDeleteTicket = async () => {
+    try {
+      setLoading(true)
+
+      await deleteTicket(task.id)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -56,7 +70,13 @@ const Ticket = ({ task }: TicketProps) => {
       </Space>
       <Space className="mt-4">
         <Button type="primary">Edit</Button>
-        <Button type="primary" danger>
+        <Button
+          type="primary"
+          disabled={loading}
+          loading={loading}
+          danger
+          onClick={onDeleteTicket}
+        >
           Delete
         </Button>
       </Space>
