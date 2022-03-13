@@ -9,6 +9,12 @@ export type DataContextType = {
   createTicket: (title: string, description?: string) => Promise<boolean>
   updateTicketStatus: (id: number, status: TicketStatus) => void
   deleteTicket: (id: number) => Promise<boolean>
+  updateTicketDetails: (
+    id: number,
+    title: string,
+    description?: string,
+    status?: TicketStatus
+  ) => Promise<boolean>
 }
 
 export const DataContext = React.createContext<DataContextType>({
@@ -16,5 +22,6 @@ export const DataContext = React.createContext<DataContextType>({
   logIn: () => Promise.resolve(false),
   createTicket: () => Promise.resolve(false),
   updateTicketStatus: () => ({}),
-  deleteTicket: () => Promise.resolve(false)
+  deleteTicket: () => Promise.resolve(false),
+  updateTicketDetails: () => Promise.resolve(false)
 })

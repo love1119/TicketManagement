@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import storage from 'store'
 
 import { INTERNAL_LINKS } from 'constant/InternalLinks'
@@ -79,6 +79,34 @@ const App: FC = () => {
     })
   }
 
+  const updateTicketDetails = (
+    id: number,
+    title: string,
+    description?: string,
+    status?: TicketStatus
+  ): Promise<boolean> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const ticketIndex = (state.tickets || []).findIndex(
+          (ticket: TicketType) => ticket.id === id
+        )
+
+        if (ticketIndex >= 0) {
+          state.tickets[ticketIndex] = {
+            ...state.tickets[ticketIndex],
+            title,
+            description,
+            status
+          }
+          updateState({ ...state })
+          resolve(true)
+        } else {
+          resolve(false)
+        }
+      }, 2000)
+    })
+  }
+
   const updateTicketStatus = (id: number, status: TicketStatus): void => {
     const ticketIndex = (state.tickets || []).findIndex(
       (ticket: TicketType) => ticket.id === id
@@ -113,7 +141,14 @@ const App: FC = () => {
 
   return (
     <DataContext.Provider
-      value={{ state, logIn, createTicket, updateTicketStatus, deleteTicket }}
+      value={{
+        state,
+        logIn,
+        createTicket,
+        updateTicketStatus,
+        deleteTicket,
+        updateTicketDetails
+      }}
     >
       <div className="bg-white">
         <Switch>

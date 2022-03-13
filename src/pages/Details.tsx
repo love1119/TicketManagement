@@ -12,7 +12,8 @@ import { TicketType, TicketStatus } from 'models/task'
 const { Option } = Select
 
 const DetailsPage = () => {
-  const { state } = useContext<DataContextType>(DataContext)
+  const { state, updateTicketDetails } =
+    useContext<DataContextType>(DataContext)
   const history = useHistory()
   const { ticketid } = useParams<{ ticketid: string }>()
 
@@ -24,8 +25,23 @@ const DetailsPage = () => {
 
   const refForm = useRef<FormInstance<TicketType>>(null)
 
-  const onFinish = (values: TicketType) => {
+  const onFinish = async (values: TicketType) => {
     console.log(values)
+    try {
+      setLoading(true)
+
+      await updateTicketDetails(
+        ticketDetails.id,
+        values.title,
+        values.description,
+        values.status
+      )
+      onBack()
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const onFinishFailed = () => {
@@ -108,12 +124,7 @@ const DetailsPage = () => {
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button
-              className="mr-4"
-              disabled={loading}
-              loading={loading}
-              onClick={onBack}
-            >
+            <Button className="mr-4" disabled={loading} onClick={onBack}>
               Cancel
             </Button>
             <Button
