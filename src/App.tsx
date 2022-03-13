@@ -128,7 +128,6 @@ const App: FC = () => {
             path={INTERNAL_LINKS.MAIN}
             render={() => <MainPage />}
           />
-          <Redirect exact path="/" to={{ pathname: INTERNAL_LINKS.MAIN }} />
         </Switch>
       </div>
     </DataContext.Provider>

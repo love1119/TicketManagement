@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useContext } from 'react'
 import { Card, Space, Select, Button } from 'antd'
+import { useHistory } from 'react-router-dom'
 import { DataContext, DataContextType } from 'context/DataContext'
 
 import { TicketType, TicketStatus } from 'models/task'
 import { TICKET_STATUS } from 'constant/constants'
+import { INTERNAL_LINKS } from 'constant/InternalLinks'
 
 const { Option } = Select
 
@@ -15,6 +17,7 @@ type TicketProps = {
 const Ticket = ({ task }: TicketProps) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [statusList, setStatusList] = useState<string[]>([])
+  const history = useHistory()
 
   const { updateTicketStatus, deleteTicket } =
     useContext<DataContextType>(DataContext)
@@ -33,6 +36,10 @@ const Ticket = ({ task }: TicketProps) => {
     } finally {
       setLoading(false)
     }
+  }
+
+  const onEditTicket = () => {
+    history.push(`${INTERNAL_LINKS.DETAILS}/${task.id}`)
   }
 
   useEffect(() => {
@@ -69,7 +76,9 @@ const Ticket = ({ task }: TicketProps) => {
         </Select>
       </Space>
       <Space className="mt-4">
-        <Button type="primary">Edit</Button>
+        <Button type="primary" onClick={onEditTicket}>
+          Edit
+        </Button>
         <Button
           type="primary"
           disabled={loading}
