@@ -1,6 +1,7 @@
 import { FC, useState } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
 import storage from 'store'
+import { Button } from 'antd'
 
 import { INTERNAL_LINKS } from 'constant/InternalLinks'
 
@@ -21,6 +22,9 @@ const EMAIL = 'test@vroom.com.au'
 const PASSWORD = 'frontendtest2022'
 
 const App: FC = () => {
+  const history = useHistory()
+  const { pathname } = useLocation()
+
   const [state, updateState] = useState<RootState>({} as RootState)
 
   const logIn = (email: string, password: string): Promise<boolean> => {
@@ -39,6 +43,16 @@ const App: FC = () => {
         }
       }, 2000)
     })
+  }
+
+  const onLogout = () => {
+    storage.remove('user')
+    state.user = {
+      email: '',
+      password: ''
+    }
+    updateState(state)
+    history.push(INTERNAL_LINKS.LOGIN)
   }
 
   const generateID = () => {
@@ -164,6 +178,11 @@ const App: FC = () => {
             render={() => <MainPage />}
           />
         </Switch>
+        {pathname !== INTERNAL_LINKS.LOGIN && (
+          <div className="absolute top-4 right-4" onClick={onLogout}>
+            <Button>Log Out</Button>
+          </div>
+        )}
       </div>
     </DataContext.Provider>
   )
