@@ -15,7 +15,7 @@ const MainPage = () => {
   }
 
   return (
-    <div className="overflow-hidden p-8 h-screen bg-white">
+    <div className="overflow-auto p-8 h-screen bg-white">
       <Button type="primary" onClick={showModal}>
         New Ticket
       </Button>

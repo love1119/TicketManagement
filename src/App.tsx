@@ -189,7 +189,7 @@ const App: FC = () => {
           />
         </Switch>
         {pathname !== INTERNAL_LINKS.LOGIN && (
-          <div className="absolute top-4 right-4" onClick={onLogout}>
+          <div className="absolute top-8 right-8" onClick={onLogout}>
             <Button>Log Out</Button>
           </div>
         )}

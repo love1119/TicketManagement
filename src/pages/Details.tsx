@@ -89,8 +89,8 @@ const DetailsPage = () => {
   }, [ticketDetails])
 
   return (
-    <div className="flex justify-center items-center h-screen bg-white">
-      <div className="px-8 pt-8 w-96 rounded-lg border">
+    <div className="flex justify-center items-center mt-12 bg-white">
+      <div className="px-8 pt-8 w-96 rounded-lg border-none md:border-2 md:border-solid">
         <Form
           ref={refForm}
           name="basic"

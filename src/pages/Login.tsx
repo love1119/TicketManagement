@@ -37,13 +37,13 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-white">
-      <div className="px-8 pt-8 w-96 rounded-lg border">
+      <div className="px-8 pt-8 w-96 rounded-lg border-none md:border-2 md:border-solid">
         <h1 className="mb-8 w-full text-2xl text-center">Log In</h1>
 
         <Form
           name="basic"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 18 }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
