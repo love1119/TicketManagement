@@ -1,4 +1,6 @@
-const Login = () => {
+import { FC } from 'react'
+
+const Login: FC = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-white">
       <div className="w-96 rounded-lg border">

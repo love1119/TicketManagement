@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { Route, Switch } from 'react-router-dom'
 
 import { INTERNAL_LINKS } from 'constant/InternalLinks'
@@ -6,7 +7,7 @@ import Login from 'pages/Login'
 import DetailsPage from 'pages/Details'
 import MainPage from 'pages/Main'
 
-const App = () => {
+const App: FC = () => {
   return (
     <div className="bg-white">
       <Switch>
