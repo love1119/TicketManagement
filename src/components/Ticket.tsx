@@ -22,8 +22,15 @@ const Ticket = ({ task }: TicketProps) => {
   const { updateTicketStatus, deleteTicket } =
     useContext<DataContextType>(DataContext)
 
-  const onTicketStatusChange = (value: TicketStatus) => {
-    updateTicketStatus(task.id, value)
+  const onTicketStatusChange = async (value: TicketStatus) => {
+    try {
+      setLoading(true)
+      await updateTicketStatus(task.id, value)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const onDeleteTicket = async () => {
@@ -66,6 +73,7 @@ const Ticket = ({ task }: TicketProps) => {
         <h6 className="mr-4 font-bold">Status:</h6>
         <Select
           defaultValue={task.status}
+          disabled={loading}
           onChange={(e: TicketStatus) => onTicketStatusChange(e)}
         >
           {statusList.map((sts: string) => (
@@ -76,7 +84,7 @@ const Ticket = ({ task }: TicketProps) => {
         </Select>
       </Space>
       <Space className="mt-4">
-        <Button type="primary" onClick={onEditTicket}>
+        <Button type="primary" disabled={loading} onClick={onEditTicket}>
           Edit
         </Button>
         <Button

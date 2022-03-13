@@ -121,15 +121,25 @@ const App: FC = () => {
     })
   }
 
-  const updateTicketStatus = (id: number, status: TicketStatus): void => {
-    const ticketIndex = (state.tickets || []).findIndex(
-      (ticket: TicketType) => ticket.id === id
-    )
+  const updateTicketStatus = (
+    id: number,
+    status: TicketStatus
+  ): Promise<boolean> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const ticketIndex = (state.tickets || []).findIndex(
+          (ticket: TicketType) => ticket.id === id
+        )
 
-    if (ticketIndex >= 0) {
-      state.tickets[ticketIndex].status = status
-      updateState({ ...state })
-    }
+        if (ticketIndex >= 0) {
+          state.tickets[ticketIndex].status = status
+          updateState({ ...state })
+          resolve(true)
+        } else {
+          resolve(false)
+        }
+      }, 2000)
+    })
   }
 
   const deleteTicket = (id: number): Promise<boolean> => {
