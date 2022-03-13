@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, useEffect, useContext } from 'react'
 import { Card, Space, Select, Button } from 'antd'
+import { DataContext, DataContextType } from 'context/DataContext'
 
 import { TicketType, TicketStatus } from 'models/task'
 import { TICKET_STATUS } from 'constant/constants'
@@ -12,6 +14,12 @@ type TicketProps = {
 
 const Ticket = ({ task }: TicketProps) => {
   const [statusList, setStatusList] = useState<string[]>([])
+
+  const { updateTicketStatus } = useContext<DataContextType>(DataContext)
+
+  const onTicketStatusChange = (value: TicketStatus) => {
+    updateTicketStatus(task.id, value)
+  }
 
   useEffect(() => {
     if (task?.status) {
@@ -35,7 +43,10 @@ const Ticket = ({ task }: TicketProps) => {
       <h6 className="mb-4">{task.description}</h6>
       <Space>
         <h6 className="mr-4 font-bold">Status:</h6>
-        <Select defaultValue={task.status}>
+        <Select
+          defaultValue={task.status}
+          onChange={(e: TicketStatus) => onTicketStatusChange(e)}
+        >
           {statusList.map((sts: string) => (
             <Option key={sts} value={sts}>
               {TICKET_STATUS[sts as TicketStatus]}

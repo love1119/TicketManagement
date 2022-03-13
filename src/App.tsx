@@ -13,7 +13,7 @@ import MainPage from 'pages/Main'
 import PrivateRoute from 'components/PrivsateRoute'
 
 import { RootState } from 'models/state'
-import { TicketType } from 'models/task'
+import { TicketType, TicketStatus } from 'models/task'
 
 import 'antd/dist/antd.css'
 
@@ -79,8 +79,21 @@ const App: FC = () => {
     })
   }
 
+  const updateTicketStatus = (id: number, status: TicketStatus): void => {
+    const ticketIndex = (state.tickets || []).findIndex(
+      (ticket: TicketType) => ticket.id === id
+    )
+
+    if (ticketIndex >= 0) {
+      state.tickets[ticketIndex].status = status
+      updateState({ ...state })
+    }
+  }
+
   return (
-    <DataContext.Provider value={{ state, logIn, createTicket }}>
+    <DataContext.Provider
+      value={{ state, logIn, createTicket, updateTicketStatus }}
+    >
       <div className="bg-white">
         <Switch>
           <Route exact path={INTERNAL_LINKS.LOGIN} render={() => <Login />} />
