@@ -1,11 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useContext, useState } from 'react'
 import { Form, Input, Button } from 'antd'
+import { useHistory } from 'react-router-dom'
 
 import { IUserDetails } from 'models/userdetails'
+import { DataContext, DataContextType } from 'context/DataContext'
+import { INTERNAL_LINKS } from 'constant/InternalLinks'
 
 const Login = () => {
-  const onFinish = (values: IUserDetails) => {
-    console.log('Success:', values)
+  const { logIn } = useContext<DataContextType>(DataContext)
+  const history = useHistory()
+
+  const [loading, setLoading] = useState(false)
+  const [errorTxt, setErrorTxt] = useState('')
+
+  const onFinish = async (values: IUserDetails) => {
+    setErrorTxt('')
+    try {
+      setLoading(true)
+      const success = await logIn(values.email, values.password)
+      if (success) {
+        history.push(INTERNAL_LINKS.MAIN)
+      } else {
+        setErrorTxt('Your email or password is incorrect.')
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -27,9 +50,12 @@ const Login = () => {
           autoComplete="off"
         >
           <Form.Item
-            label="Username"
-            name="username"
-            rules={[{ required: true, message: 'Please input your username!' }]}
+            label="Email"
+            name="email"
+            rules={[
+              { type: 'email', message: 'Please input the valid email.' },
+              { required: true, message: 'Please input your username!' }
+            ]}
           >
             <Input />
           </Form.Item>
@@ -43,11 +69,17 @@ const Login = () => {
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
+            <Button
+              disabled={loading}
+              loading={loading}
+              type="primary"
+              htmlType="submit"
+            >
               Submit
             </Button>
           </Form.Item>
         </Form>
+        <div className="mb-4 text-center text-red-600">{errorTxt}</div>
       </div>
     </div>
   )
