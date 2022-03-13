@@ -20,7 +20,7 @@ const MainPage = () => {
         New Ticket
       </Button>
       <div className="mt-8">
-        <Space>
+        <Space align="start" wrap={true}>
           <TicketSet status="open" />
           <TicketSet status="in-progress" />
           <TicketSet status="complete" />

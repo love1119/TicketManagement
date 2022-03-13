@@ -70,6 +70,7 @@ const App: FC = () => {
             createdAt: new Date()
           }
           state.tickets = [...(state.tickets || []), newTicket]
+          updateState({ ...state })
           resolve(true)
         } else {
           resolve(false)
