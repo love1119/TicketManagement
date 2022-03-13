@@ -29,7 +29,7 @@ const TicketSet = ({ status }: TicketSetProps) => {
 
   return (
     <div className="p-4 w-64 max-w-xs bg-white rounded-md border">
-      <h1>{TICKET_STATUS[status]}</h1>
+      <h1>{`${TICKET_STATUS[status]}: ${(tickets || []).length}`}</h1>
       <Space direction="vertical" className="w-full">
         {tickets.map((ticket: TicketType) => (
           <Ticket key={ticket.id} task={ticket} />
