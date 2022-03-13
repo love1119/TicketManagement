@@ -1,5 +1,11 @@
 import { FC, useState } from 'react'
-import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
+import {
+  Route,
+  Switch,
+  useHistory,
+  useLocation,
+  Redirect
+} from 'react-router-dom'
 import storage from 'store'
 import { Button } from 'antd'
 
@@ -187,6 +193,7 @@ const App: FC = () => {
             path={INTERNAL_LINKS.MAIN}
             render={() => <MainPage />}
           />
+          <Redirect path="*" to={{ pathname: INTERNAL_LINKS.MAIN }} />
         </Switch>
         {pathname !== INTERNAL_LINKS.LOGIN && (
           <div className="absolute top-8 right-8" onClick={onLogout}>

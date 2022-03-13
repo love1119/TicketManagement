@@ -21,7 +21,7 @@ const DetailsPage = () => {
   const [ticketDetails, setTicketDetails] = useState<TicketType>(
     {} as TicketType
   )
-  const [statusList, setStatusList] = useState<TicketStatus[]>([])
+  const [statusList, setStatusList] = useState<string[]>([])
 
   const refForm = useRef<FormInstance<TicketType>>(null)
 
@@ -115,8 +115,12 @@ const DetailsPage = () => {
 
           <Form.Item label="Status" name="status">
             <Select>
-              {statusList.map((sts: string) => (
-                <Option key={sts} value={sts}>
+              {['open', 'in-progress', 'complete'].map((sts: string) => (
+                <Option
+                  disabled={!statusList.includes(sts)}
+                  key={sts}
+                  value={sts}
+                >
                   {TICKET_STATUS[sts as TicketStatus]}
                 </Option>
               ))}

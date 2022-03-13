@@ -76,8 +76,8 @@ const Ticket = ({ task }: TicketProps) => {
           disabled={loading}
           onChange={(e: TicketStatus) => onTicketStatusChange(e)}
         >
-          {statusList.map((sts: string) => (
-            <Option key={sts} value={sts}>
+          {['open', 'in-progress', 'complete'].map((sts: string) => (
+            <Option disabled={!statusList.includes(sts)} key={sts} value={sts}>
               {TICKET_STATUS[sts as TicketStatus]}
             </Option>
           ))}
