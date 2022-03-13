@@ -10,6 +10,8 @@ import Login from 'pages/Login'
 import DetailsPage from 'pages/Details'
 import MainPage from 'pages/Main'
 
+import PrivateRoute from 'components/PrivsateRoute'
+
 import { RootState } from 'models/state'
 
 import 'antd/dist/antd.css'
@@ -43,12 +45,16 @@ const App: FC = () => {
       <div className="bg-white">
         <Switch>
           <Route exact path={INTERNAL_LINKS.LOGIN} render={() => <Login />} />
-          <Route
+          <PrivateRoute
             exact
             path={INTERNAL_LINKS.DETAILS}
             render={() => <DetailsPage />}
           />
-          <Route exact path={INTERNAL_LINKS.MAIN} render={() => <MainPage />} />
+          <PrivateRoute
+            exact
+            path={INTERNAL_LINKS.MAIN}
+            render={() => <MainPage />}
+          />
           <Redirect exact path="/" to={{ pathname: INTERNAL_LINKS.MAIN }} />
         </Switch>
       </div>
