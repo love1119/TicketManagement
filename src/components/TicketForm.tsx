@@ -44,7 +44,7 @@ const TicketForm = ({ onDismiss }: TicketFormProps) => {
       <Form.Item
         label="Title"
         name="title"
-        rules={[{ required: true, message: 'Please input your username!' }]}
+        rules={[{ required: true, message: 'Please input the title!' }]}
       >
         <Input />
       </Form.Item>

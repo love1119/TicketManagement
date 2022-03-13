@@ -120,7 +120,7 @@ const App: FC = () => {
           <Route exact path={INTERNAL_LINKS.LOGIN} render={() => <Login />} />
           <PrivateRoute
             exact
-            path={INTERNAL_LINKS.DETAILS}
+            path={`${INTERNAL_LINKS.DETAILS}/:ticketid`}
             render={() => <DetailsPage />}
           />
           <PrivateRoute
