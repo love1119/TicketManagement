@@ -11,8 +11,8 @@ const Login = () => {
   const { logIn } = useContext<DataContextType>(DataContext)
   const history = useHistory()
 
-  const [loading, setLoading] = useState(false)
-  const [errorTxt, setErrorTxt] = useState('')
+  const [loading, setLoading] = useState<boolean>(false)
+  const [errorTxt, setErrorTxt] = useState<string>('')
 
   const onFinish = async (values: IUserDetails) => {
     setErrorTxt('')
